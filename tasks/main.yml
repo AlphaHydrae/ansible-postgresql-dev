@@ -1,0 +1,13 @@
+---
+
+# Homebrew
+- name: brew install postgresql
+  homebrew: name=postgresql state=installed
+  become: true
+  become_user: "{{ postgresql_dev_brew_user }}"
+  when: ansible_pkg_mgr == 'homebrew'
+- name: brew services start postgresql
+  shell: su - {{ postgresql_dev_brew_user }} -c "{{ postgresql_dev_brew_bin }} services start postgresql"
+  register: result
+  changed_when: result.rc != 0
+  when: ansible_pkg_mgr == 'homebrew'
