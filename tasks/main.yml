@@ -1,13 +1,17 @@
 ---
 
-# Homebrew
-- name: brew install postgresql
-  homebrew: name=postgresql state=installed
+- name: Install PostgreSQL (Homebrew)
+  homebrew: name=postgresql state=present
   become: true
-  become_user: "{{ postgresql_dev_brew_user }}"
+  become_user: "{{ postgresql_dev_homebrew_user }}"
   when: ansible_pkg_mgr == 'homebrew'
-- name: brew services start postgresql
-  shell: su - {{ postgresql_dev_brew_user }} -c "{{ postgresql_dev_brew_bin }} services start postgresql"
+
+- name: Start PostgreSQL (Homebrew)
+  shell: su - {{ postgresql_dev_homebrew_user }} -c "{{ postgresql_dev_homebrew_bin }} services start postgresql"
   register: result
   changed_when: result.rc != 0
   when: ansible_pkg_mgr == 'homebrew'
+
+# Unsupported package managers
+- fail: msg="{{ ansible_pkg_mgr }} is not a supported package manager (Homebrew is supported)"
+  when: ansible_pkg_mgr != 'homebrew'
