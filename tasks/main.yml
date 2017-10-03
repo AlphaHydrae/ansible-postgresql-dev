@@ -1,9 +1,12 @@
 ---
 
 - name: Install PostgreSQL (Homebrew)
-  homebrew: name=postgresql state=present
+  homebrew: name={{ item }} state=present
   become: true
   become_user: "{{ postgresql_dev_homebrew_user }}"
+  with_items:
+    - postgresql
+    - postgis
   when: ansible_pkg_mgr == 'homebrew'
 
 - name: Start PostgreSQL (Homebrew)
