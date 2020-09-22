@@ -12,4 +12,9 @@ galaxy_info:
   galaxy_tags:
     - postgresql
 
-dependencies: []
+dependencies:
+  - role: AlphaHydrae.homebrew-service
+    homebrew_service: postgresql
+    homebrew_service_packages:
+      - postgresql
+      - postgis
