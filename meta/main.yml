@@ -17,7 +17,6 @@ dependencies:
     homebrew_service: postgresql
     homebrew_service_packages:
       - postgresql
-      - postgis
     homebrew_service_start_check_command: >-
       {{ homebrew_service_dir }}/bin/psql
       --command {{ 'select 1 + 2;' | quote }}
